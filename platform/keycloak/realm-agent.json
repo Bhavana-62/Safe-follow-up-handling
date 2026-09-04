@@ -1,0 +1,147 @@
+{
+  "realm": "agent",
+  "enabled": true,
+  "roles": {
+    "realm": [
+      {"name": "employee"},
+      {"name": "finance"},
+      {"name": "sales"},
+      {"name": "operations"},
+      {"name": "legal"},
+      {"name": "procurement"},
+      {"name": "support"}
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "agent-api",
+      "enabled": true,
+      "publicClient": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "secret": "agent-api-secret",
+      "protocolMappers": [
+        {
+          "name": "audience-mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "agent-api",
+            "id.token.claim": "true",
+            "access.token.claim": "true"
+          }
+        },
+        {
+          "name": "realm-roles-flattened",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "multivalued": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true"
+          }
+        },
+        {
+          "name": "region-mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "region",
+            "claim.name": "regions",
+            "jsonType.label": "String",
+            "multivalued": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true"
+          }
+        },
+        {
+          "name": "department-mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "department",
+            "claim.name": "department",
+            "jsonType.label": "String",
+            "multivalued": "false",
+            "id.token.claim": "true",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "finance.lead",
+      "enabled": true,
+      "email": "finance.lead@example.com",
+      "credentials": [{"type": "password", "value": "devpassword", "temporary": false}],
+      "realmRoles": ["employee", "finance"],
+      "attributes": {
+        "region": ["EMEA", "NA"],
+        "department": ["Finance"]
+      }
+    },
+    {
+      "username": "dana.reyes",
+      "enabled": true,
+      "email": "dana.reyes@example.com",
+      "credentials": [{"type": "password", "value": "devpassword", "temporary": false}],
+      "realmRoles": ["employee", "support"],
+      "attributes": {
+        "region": ["EMEA"],
+        "department": ["Support"]
+      }
+    },
+    {
+      "username": "analyst",
+      "enabled": true,
+      "email": "analyst@example.com",
+      "credentials": [{"type": "password", "value": "devpassword", "temporary": false}],
+      "realmRoles": ["employee", "operations"],
+      "attributes": {
+        "region": ["EMEA"],
+        "department": ["Operations"]
+      }
+    },
+    {
+      "username": "procurement.lead",
+      "enabled": true,
+      "email": "procurement.lead@example.com",
+      "credentials": [{"type": "password", "value": "devpassword", "temporary": false}],
+      "realmRoles": ["employee", "procurement"],
+      "attributes": {
+        "region": ["EMEA", "NA"],
+        "department": ["Procurement"]
+      }
+    },
+    {
+      "username": "sales.lead",
+      "enabled": true,
+      "email": "sales.lead@example.com",
+      "credentials": [{"type": "password", "value": "devpassword", "temporary": false}],
+      "realmRoles": ["employee", "sales"],
+      "attributes": {
+        "region": ["NA"],
+        "department": ["Sales"]
+      }
+    },
+    {
+      "username": "ops.analyst",
+      "enabled": true,
+      "email": "ops.analyst@example.com",
+      "credentials": [{"type": "password", "value": "devpassword", "temporary": false}],
+      "realmRoles": ["employee", "operations"],
+      "attributes": {
+        "region": ["NA"],
+        "department": ["Operations"]
+      }
+    }
+  ]
+}

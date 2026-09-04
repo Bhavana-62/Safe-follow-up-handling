@@ -1,0 +1,19 @@
+name: local
+egress: none
+roles:
+  embed:
+    model: nomic-embed-text
+    dim: 768
+  classify:
+    model: llama3.2:3b
+    ctx: 8192
+    temperature: 0
+  synthesise:
+    model: llama3.1:8b
+    ctx: 16384
+    temperature: 0
+pricing:
+  basis: amortized_compute
+  per_1k_tokens:
+    in: 0.00002
+    out: 0.00002
